@@ -1,4 +1,4 @@
-#if defined(__APPLE__)
+#ifdef (_APPLE_)
     #include <GLUT/glut.h>
 #else
     #include <GL/glut.h>
@@ -37,6 +37,48 @@ void output(int x, int y, char *string, void *font)
     len = (int) strlen(string);
     for (i = 0; i < len; i++) {
         glutBitmapCharacter(font, string[i]);
+    }
+}
+
+void drawHelixStrand(float cx, float cy, float r, float angle=0)
+{
+	float x, y, z, theta;
+	int i, n = 615;
+	angle = angle * PI / 180.0;
+	glBegin(GL_LINE_STRIP);
+	    for(i=0; i<n; i++)
+	    {
+	    	theta = 2.0 * PI * i / n;
+	    	x = cx - (r * sinf(2 * theta + angle));
+	    	y = cy + i;
+	    	z = r * cosf(2 * theta + angle);
+
+	    	glVertex3f(x, y, z);
+	    }
+    glEnd();
+}
+
+void drawHelixLine(float cx, float cy, float r, float angle=0)
+{
+	float x1, x2, y1, y2, z1, z2, theta;
+	int i, n = 615;
+	angle = angle * PI / 180.0;
+    for(i=0; i<n; i+=30)
+    {
+		glBegin(GL_LINE_STRIP);
+	    	theta = 2.0 * PI * i / n;
+	    	x1 = cx - (r * sinf(2 * theta));
+	    	y1 = cy + i;
+	    	z1 = r * cosf(2 * theta);
+
+	    	x2 = cx - (r * sinf(2 * theta + angle));
+	    	y2 = cy + i;
+	    	z2 = r * cosf(2 * theta + angle);
+
+	    	glVertex3f(x1, y1, z1);
+	    	glVertex3f(x2, y2, z2);
+			
+		glEnd();
     }
 }
 
@@ -87,44 +129,24 @@ void menu()
 
 void dna()
 {
-        float x, y, z, theta, cx=200, cy=200, r=100;
-        int i;
-        
-        glColor3f(1.0, 0.0, 0.0);
-        glLineWidth(10.0);
-        
-        //    glPushMatrix();
-        //    glRotatef(10, 0, 1, 0);
-        glBegin(GL_LINES);
-        for(i=20; i<720; i++)
-        {
-            theta = 2.0 * PI * (float)i / 720.0;
-            x = r * cosf(2*theta);
-            z = r * sinf(theta);
-            glVertex3f(x + cx, 0.87*i, z);
-            
-            theta = 2.0 * PI * (float)(i+1) / 720.0;
-            x = r * cosf(2*theta);
-            z = r * sinf(theta);
-            glVertex3f(x + cx, 0.87*(i+1), z);
-        }
-        glEnd();
-        
-        glColor3f(0.0, 0.0, 1.0);
-        //    glRotatef(10, 0, 1, 0);
-        glBegin(GL_LINES);
-        for(i=20; i<720; i++)
-        {
-            theta = 2.0 * PI * (float)i / 720.0;
-            x = r * sinf(2*theta - 40.0);
-            z = r * cosf(theta);
-            glVertex3f(x + cx, 0.87*i, z);
-        }
-        glEnd();
-        //    glPopMatrix();
-        
-        glFlush();
-    
+    float cx = 500, cy = 20, r=100;
+    int i;
+
+    glLineWidth(5.0);
+
+    glColor3f(1.0, 0.0, 0.0);
+    drawHelixStrand(cx, cy, r, 0);
+    glColor3f(0.0, 0.0, 1.0);
+    drawHelixStrand(cx, cy, r, 138);
+    glColor3f(0.5, 0.5, 0);
+    drawHelixLine(cx, cy, r, 138);
+
+    glTranslatef(cx, cy, 0);
+    glRotatef(1, 0, 1, 0);
+    glTranslatef(-cx, -cy, 0);
+
+    glFlush();
+    glutPostRedisplay();
 }
 
 /*--------------------------------------------------------------------------------------*/
@@ -286,6 +308,7 @@ int main(int argc, char **argv)
     glutInitWindowPosition(0,0);
     glutCreateWindow("DNA");
     glutDisplayFunc(display);
+    glEnable(GL_DEPTH_TEST);
   
     glutKeyboardFunc(NormalKey);
     //glutSpecialFunc(SpecialKeyFunc);
