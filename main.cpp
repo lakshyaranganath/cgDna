@@ -1,4 +1,4 @@
-#if defined(__APPLE__)
+#ifdef _APPLE_
     #include <GLUT/glut.h>
 #else
     #include <GL/glut.h>
@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 int page=-1; //start at intro page
 
@@ -22,6 +23,8 @@ void *fonts[]=
     GLUT_BITMAP_HELVETICA_12
 };
 
+#define PI 3.1415926
+
 /*---------------------------------------------------------------------------------------*/
 /*							   HELPER FUNCTIONS									         */
 /*---------------------------------------------------------------------------------------*/
@@ -35,6 +38,24 @@ void output(int x, int y, char *string, void *font)
     for (i = 0; i < len; i++) {
         glutBitmapCharacter(font, string[i]);
     }
+}
+
+void drawHelixStrand(float cx, float cy, float r, float angle=0)
+{
+	float x, y, z, theta;
+	int i, n = 615;
+	angle = angle * PI / 180.0;
+	glBegin(GL_LINE_STRIP);
+	    for(i=0; i<n; i++)
+	    {
+	    	theta = 2.0 * PI * i / n;
+	    	x = cx - (r * sinf(2 * theta + angle));
+	    	y = cy + i;
+	    	z = r * cosf(2 * theta + angle);
+
+	    	glVertex3f(x, y, z);
+	    }
+    glEnd();
 }
 
 /*---------------------------------------------------------------------------------------*/
@@ -84,14 +105,48 @@ void menu()
 
 void dna()
 {
-    //put dna page code here
+    float cx = 512, cy = 20, r=100;
+    int i;
+
+    glLineWidth(5.0);
+
+    glColor3f(1.0, 0.0, 0.0);
+    drawHelixStrand(cx, cy, r, 0);
+    glColor3f(0.0, 0.0, 1.0);
+    drawHelixStrand(cx, cy, r, 138);
+
+    glTranslatef(cx, cy, 0);
+    glRotatef(1, 0, 1, 0);
+    glTranslatef(-cx, -cy, 0);
+    
+    glFlush();
+    glutPostRedisplay();
 }
 
 /*--------------------------------------------------------------------------------------*/
 
 void adenine()
 {
-    //put adenine page code here
+    glLineWidth(5.0);
+
+	glColor3f(0.0, 0.0, 1.0);
+    glBegin(GL_LINE_STRIP);
+    	glVertex3f(100, 200, -10);
+    	glVertex3f(100, 100, -10);
+    glEnd();
+
+    glColor3f(1.0, 0.0, 0.0);
+    glBegin(GL_LINE_STRIP);
+    	glVertex3f(100, 200, 0);
+    	glVertex3f(100, 100, 0);
+    glEnd();
+
+    glTranslatef(100, 150, 0);
+    glRotatef(0.5, 0, 1, 0);
+    glTranslatef(-100, -150, 0);
+
+    glFlush();
+    glutPostRedisplay();
 }
 
 /*--------------------------------------------------------------------------------------*/
@@ -246,6 +301,7 @@ int main(int argc, char **argv)
     glutInitWindowPosition(0,0);
     glutCreateWindow("DNA");
     glutDisplayFunc(display);
+    glEnable(GL_DEPTH_TEST);
   
     glutKeyboardFunc(NormalKey);
     //glutSpecialFunc(SpecialKeyFunc);
