@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 int page=-1; //start at intro page
 
@@ -21,6 +22,8 @@ void *fonts[]=
     GLUT_BITMAP_HELVETICA_18,
     GLUT_BITMAP_HELVETICA_12
 };
+
+#define PI 3.1415926
 
 /*---------------------------------------------------------------------------------------*/
 /*							   HELPER FUNCTIONS									         */
@@ -84,7 +87,44 @@ void menu()
 
 void dna()
 {
-    //put dna page code here
+        float x, y, z, theta, cx=200, cy=200, r=100;
+        int i;
+        
+        glColor3f(1.0, 0.0, 0.0);
+        glLineWidth(10.0);
+        
+        //    glPushMatrix();
+        //    glRotatef(10, 0, 1, 0);
+        glBegin(GL_LINES);
+        for(i=20; i<720; i++)
+        {
+            theta = 2.0 * PI * (float)i / 720.0;
+            x = r * cosf(2*theta);
+            z = r * sinf(theta);
+            glVertex3f(x + cx, 0.87*i, z);
+            
+            theta = 2.0 * PI * (float)(i+1) / 720.0;
+            x = r * cosf(2*theta);
+            z = r * sinf(theta);
+            glVertex3f(x + cx, 0.87*(i+1), z);
+        }
+        glEnd();
+        
+        glColor3f(0.0, 0.0, 1.0);
+        //    glRotatef(10, 0, 1, 0);
+        glBegin(GL_LINES);
+        for(i=20; i<720; i++)
+        {
+            theta = 2.0 * PI * (float)i / 720.0;
+            x = r * sinf(2*theta - 40.0);
+            z = r * cosf(theta);
+            glVertex3f(x + cx, 0.87*i, z);
+        }
+        glEnd();
+        //    glPopMatrix();
+        
+        glFlush();
+    
 }
 
 /*--------------------------------------------------------------------------------------*/
