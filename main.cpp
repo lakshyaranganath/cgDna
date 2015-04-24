@@ -58,6 +58,30 @@ void drawHelixStrand(float cx, float cy, float r, float angle=0)
     glEnd();
 }
 
+void drawHelixLine(float cx, float cy, float r, float angle=0)
+{
+	float x1, x2, y1, y2, z1, z2, theta;
+	int i, n = 615;
+	angle = angle * PI / 180.0;
+    for(i=0; i<n; i+=30)
+    {
+		glBegin(GL_LINE_STRIP);
+	    	theta = 2.0 * PI * i / n;
+	    	x1 = cx - (r * sinf(2 * theta));
+	    	y1 = cy + i;
+	    	z1 = r * cosf(2 * theta);
+
+	    	x2 = cx - (r * sinf(2 * theta + angle));
+	    	y2 = cy + i;
+	    	z2 = r * cosf(2 * theta + angle);
+
+	    	glVertex3f(x1, y1, z1);
+	    	glVertex3f(x2, y2, z2);
+			
+		glEnd();
+    }
+}
+
 /*---------------------------------------------------------------------------------------*/
 /*                                PAGES                                                  */
 /*---------------------------------------------------------------------------------------*/
@@ -105,7 +129,7 @@ void menu()
 
 void dna()
 {
-    float cx = 512, cy = 20, r=100;
+    float cx = 500, cy = 20, r=100;
     int i;
 
     glLineWidth(5.0);
@@ -114,6 +138,8 @@ void dna()
     drawHelixStrand(cx, cy, r, 0);
     glColor3f(0.0, 0.0, 1.0);
     drawHelixStrand(cx, cy, r, 138);
+    glColor3f(0.5, 0.5, 0);
+    drawHelixLine(cx, cy, r, 138);
 
     glTranslatef(cx, cy, 0);
     glRotatef(1, 0, 1, 0);
@@ -127,26 +153,7 @@ void dna()
 
 void adenine()
 {
-    glLineWidth(5.0);
-
-	glColor3f(0.0, 0.0, 1.0);
-    glBegin(GL_LINE_STRIP);
-    	glVertex3f(100, 200, -10);
-    	glVertex3f(100, 100, -10);
-    glEnd();
-
-    glColor3f(1.0, 0.0, 0.0);
-    glBegin(GL_LINE_STRIP);
-    	glVertex3f(100, 200, 0);
-    	glVertex3f(100, 100, 0);
-    glEnd();
-
-    glTranslatef(100, 150, 0);
-    glRotatef(0.5, 0, 1, 0);
-    glTranslatef(-100, -150, 0);
-
-    glFlush();
-    glutPostRedisplay();
+    //put adenine page code here
 }
 
 /*--------------------------------------------------------------------------------------*/
