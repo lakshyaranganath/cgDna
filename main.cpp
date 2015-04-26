@@ -1,4 +1,4 @@
-#ifdef (_APPLE_)
+#if defined(__APPLE__)
     #include <GLUT/glut.h>
 #else
     #include <GL/glut.h>
@@ -115,7 +115,6 @@ void menu()
     glColor3f(0.5, 0.6, 0.1);
     output(420, 450, "MENU", fonts[3]);
 
-//    glColor3f(0.6, 0.3, 0.7);
     glColor3f(1, 0.5, 0);
     output(420, 420, "1. DNA", fonts[0]);
     output(420, 390, "2. ADENINE", fonts[0]);
@@ -130,7 +129,6 @@ void menu()
 void dna()
 {
     float cx = 500, cy = 20, r=100;
-    int i;
 
     glLineWidth(5.0);
 
@@ -138,7 +136,7 @@ void dna()
     drawHelixStrand(cx, cy, r, 0);
     glColor3f(0.0, 0.0, 1.0);
     drawHelixStrand(cx, cy, r, 138);
-    glColor3f(0.5, 0.5, 0);
+    glColor3f(0.75, 0.75, 0.0);
     drawHelixLine(cx, cy, r, 138);
 
     glTranslatef(cx, cy, 0);
@@ -187,7 +185,7 @@ void display(void)
     glLoadIdentity();
     glOrtho(0, 1000, 0.0, 650,-2000,1500);
     glMatrixMode(GL_MODELVIEW);
-    glClearColor(0.8, 0.8, 0.8, 0.8);
+    glClearColor(0.9, 0.9, 0.9, 0.9);
     glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
     switch(page)
