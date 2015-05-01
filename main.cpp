@@ -8,7 +8,7 @@
 #include <string.h>
 #include <math.h>
 
-int page=1; //start at intro page
+int page=-1; //start at intro page
 
 /*---------------------------------------------------------------------------------------*/
 /*							   DECLARATIONS												 */
@@ -89,7 +89,7 @@ void drawHelixLine(float cx, float cy, float r, float angle=0)
 			
 		glEnd();
 
-        glColor3f(0.0, 0.0, 0.0);
+        glColor3f(0.25, 0.25, 0.25);
         drawSphere(x1, y1, z1);
         drawSphere(x2, y2, z2);
 
@@ -144,8 +144,9 @@ void dna()
 
     glLineWidth(5.0);
 
-    glColor3f(0.0, 0.0, 1.0);
+    glColor3f(0.0, 0.0, 0.75);
     drawHelixStrand(cx, cy, r, 0);
+    glColor3f(0.75, 0.0, 0.0);
     drawHelixStrand(cx, cy, r, 138);
     glColor3f(0.75, 0.75, 0.0);
     drawHelixLine(cx, cy, r, 138);
