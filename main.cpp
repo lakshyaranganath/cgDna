@@ -40,6 +40,11 @@ void output(int x, int y, char *string, void *font)
     }
 }
 
+// void drawCircle(float cx, float cy, float r)
+// {
+// 	float x, y, z, theta;
+// }
+
 void drawHelixStrand(float cx, float cy, float r, float angle=0)
 {
 	float x, y, z, theta;
@@ -49,9 +54,9 @@ void drawHelixStrand(float cx, float cy, float r, float angle=0)
 	    for(i=0; i<n; i++)
 	    {
 	    	theta = 2.0 * PI * i / n;
-	    	x = cx - (r * sinf(2 * theta + angle));
+	    	x = cx - (r * sinf(1 * theta + angle));
 	    	y = cy + i;
-	    	z = r * cosf(2 * theta + angle);
+	    	z = r * cosf(1 * theta + angle);
 
 	    	glVertex3f(x, y, z);
 	    }
@@ -63,23 +68,27 @@ void drawHelixLine(float cx, float cy, float r, float angle=0)
 	float x1, x2, y1, y2, z1, z2, theta;
 	int i, n = 615;
 	angle = angle * PI / 180.0;
-    for(i=0; i<n; i+=30)
+    for(i=0; i<n; i+=35)
     {
 		glBegin(GL_LINE_STRIP);
 	    	theta = 2.0 * PI * i / n;
-	    	x1 = cx - (r * sinf(2 * theta));
+	    	x1 = cx - (r * sinf(1 * theta));
 	    	y1 = cy + i;
-	    	z1 = r * cosf(2 * theta);
+	    	z1 = r * cosf(1 * theta);
 
-	    	x2 = cx - (r * sinf(2 * theta + angle));
+	    	x2 = cx - (r * sinf(1 * theta + angle));
 	    	y2 = cy + i;
-	    	z2 = r * cosf(2 * theta + angle);
+	    	z2 = r * cosf(1 * theta + angle);
 
 	    	glVertex3f(x1, y1, z1);
 	    	glVertex3f(x2, y2, z2);
 			
 		glEnd();
     }
+    glColor3f(0.0, 0.0, 0.0);
+    glTranslatef(x1, y1, z1);
+    glutSolidSphere(5, 8, 8);
+    glTranslatef(-x1, -y1, -z1);
 }
 
 /*---------------------------------------------------------------------------------------*/
