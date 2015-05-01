@@ -1,4 +1,4 @@
-#ifdef _APPLE_
+#if defined(__APPLE__)
     #include <GLUT/glut.h>
 #else
     #include <GL/glut.h>
@@ -122,16 +122,13 @@ void menu()
     output(350, 580, "DNA - Deoxyribonucleic Acid", fonts[2]);
 
     glColor3f(0.5, 0.6, 0.1);
-    output(420, 450, "MENU", fonts[3]);
+    output(420, 450, "Menu", fonts[3]);
 
-//    glColor3f(0.6, 0.3, 0.7);
     glColor3f(1, 0.5, 0);
     output(420, 420, "1. DNA", fonts[0]);
-    output(420, 390, "2. ADENINE", fonts[0]);
-    output(420, 360, "3. THYMINE", fonts[0]);
-    output(420, 330, "4. CYTOSINE", fonts[0]);
-    output(420, 300, "5. GUANINE", fonts[0]);
-    output(420, 270, "ESC. EXIT", fonts[0]);
+    output(420, 390, "2. Adenine-Thymine", fonts[0]);
+    output(420, 360, "3. Cytosine-Guanine", fonts[0]);
+    output(420, 330, "ESC. Exit", fonts[0]);
 }
 
 /*--------------------------------------------------------------------------------------*/
@@ -139,17 +136,15 @@ void menu()
 void dna()
 {
     float cx = 500, cy = 20, r=100;
-    int i;
 
     glLineWidth(5.0);
 
-    glColor3f(1.0, 0.0, 0.0);
-    drawHelixStrand(cx, cy, r, 0);
     glColor3f(0.0, 0.0, 1.0);
+    drawHelixStrand(cx, cy, r, 0);
     drawHelixStrand(cx, cy, r, 138);
-    glColor3f(0.5, 0.5, 0);
+    glColor3f(0.75, 0.75, 0.0);
     drawHelixLine(cx, cy, r, 138);
-
+    
     glTranslatef(cx, cy, 0);
     glRotatef(1, 0, 1, 0);
     glTranslatef(-cx, -cy, 0);
@@ -160,31 +155,18 @@ void dna()
 
 /*--------------------------------------------------------------------------------------*/
 
-void adenine()
+void adenineThymine()
 {
-    //put adenine page code here
+    //put adenineThymine page code here
 }
 
 /*--------------------------------------------------------------------------------------*/
 
-void thymine()
+void cytosineGuanine()
 {
-    //put thymine page code here
+    //put cytosineGuanine page code here
 }
 
-/*--------------------------------------------------------------------------------------*/
-
-void cytosine()
-{
-    //put cytosine page code here
-}
-
-/*--------------------------------------------------------------------------------------*/
-
-void guanine()
-{
-    //put guanine page code here
-}
 
 /*---------------------------------------------------------------------------------------*/
 /*                              DISPLAY FUNCTION                                         */
@@ -196,18 +178,16 @@ void display(void)
     glLoadIdentity();
     glOrtho(0, 1000, 0.0, 650,-2000,1500);
     glMatrixMode(GL_MODELVIEW);
-    glClearColor(0.8, 0.8, 0.8, 0.8);
-    glClear( GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
+    glClearColor(0.9, 0.9, 0.9, 0.9);
+    glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
     switch(page)
     {
-        case -1: intro();       break;
-        case  0: menu();        break;
-        case  1: dna();         break;
-        case  2: adenine();     break;
-        case  3: thymine();     break;
-        case  4: cytosine();    break;
-        case  5: guanine();     break;
+        case -1: intro();           break;
+        case  0: menu();            break;
+        case  1: dna();             break;
+        case  2: adenineThymine();  break;
+        case  3: cytosineGuanine(); break;
     }
 
     glFlush();
@@ -238,10 +218,8 @@ void NormalKey(GLubyte key, GLint x, GLint y)
         switch(key)
         {
             case '1': page=1;	break; //goto dna
-            case '2': page=2;	break; //goto adenine
-            case '3': page=3;	break; //goto thymine
-            case '4': page=4;	break; //goto cytosine
-            case '5': page=5;	break; //goto guanine
+            case '2': page=2;	break; //goto adenineThymine
+            case '3': page=3;	break; //goto cytosineGuanine
             case 'i':
             case 'I': page=-1;	break; //go back to intro
         }
@@ -263,32 +241,14 @@ void NormalKey(GLubyte key, GLint x, GLint y)
 
 /*--------------------------------------------------------------------------------------*/
 
-static void SpecialKeyFunc( int Key, int x, int y )
-{
-    //    switch ( Key ) {
-    //        case GLUT_KEY_LEFT:
-    //            page=-1;
-    //            glutPostRedisplay();
-    //            break;
-    //        case GLUT_KEY_RIGHT:
-    //            page=0;
-    //            glutPostRedisplay();
-    //            break;
-    //    }
-}
-
-/*--------------------------------------------------------------------------------------*/
-
 void mouseMenuTrigger(int id)
 {
     switch(id)
     {
         case 1: page=1;     break; //goto dna
-        case 2: page=2;     break; //goto adenine
-        case 3: page=3;     break; //goto thymine
-        case 4: page=4;     break; //goto cytosine
-        case 5: page=5;     break; //goto guanine
-        case 6: exit(0);    //exit application
+        case 2: page=2;     break; //goto adenineThymine
+        case 3: page=3;     break; //goto cytosineGuanine
+        case 4: exit(0);    //exit application
     }
     glutPostRedisplay();
 }
@@ -297,11 +257,9 @@ void createMouseMenu()
 {
     glutCreateMenu(mouseMenuTrigger);
     glutAddMenuEntry("DNA", 1);
-    glutAddMenuEntry("ADENINE", 2);
-    glutAddMenuEntry("THYMINE", 3);
-    glutAddMenuEntry("CYTOSINE", 4);
-    glutAddMenuEntry("GUANINE", 5);
-    glutAddMenuEntry("EXIT", 6);
+    glutAddMenuEntry("Adenine-Thymine", 2);
+    glutAddMenuEntry("Cytosine-Guanine", 3);
+    glutAddMenuEntry("Exit", 4);
     glutAttachMenu(GLUT_RIGHT_BUTTON);
 }
 
@@ -320,7 +278,6 @@ int main(int argc, char **argv)
     glEnable(GL_DEPTH_TEST);
   
     glutKeyboardFunc(NormalKey);
-    //glutSpecialFunc(SpecialKeyFunc);
     createMouseMenu();
 
     glutMainLoop();
