@@ -8,7 +8,7 @@
 #include <string.h>
 #include <math.h>
 
-int page=-1; //start at intro page
+int page=1; //start at intro page
 
 /*---------------------------------------------------------------------------------------*/
 /*							   DECLARATIONS												 */
@@ -40,15 +40,10 @@ void output(int x, int y, char *string, void *font)
     }
 }
 
-// void drawCircle(float cx, float cy, float r)
-// {
-// 	float x, y, z, theta;
-// }
-
 void drawHelixStrand(float cx, float cy, float r, float angle=0)
 {
 	float x, y, z, theta;
-	int i, n = 615;
+	int i, n = 565;
 	angle = angle * PI / 180.0;
 	glBegin(GL_LINE_STRIP);
 	    for(i=0; i<n; i++)
@@ -63,13 +58,22 @@ void drawHelixStrand(float cx, float cy, float r, float angle=0)
     glEnd();
 }
 
+void drawSphere(float x, float y, float z)
+{
+    glTranslatef(x, y, z);
+    glutSolidSphere(7, 20, 20);
+    glTranslatef(-x, -y, -z);
+}
+
 void drawHelixLine(float cx, float cy, float r, float angle=0)
 {
 	float x1, x2, y1, y2, z1, z2, theta;
-	int i, n = 615;
+	int i, n = 565;
 	angle = angle * PI / 180.0;
     for(i=0; i<n; i+=35)
     {
+        glColor3f(0.75, 0.75, 0.0);
+        
 		glBegin(GL_LINE_STRIP);
 	    	theta = 2.0 * PI * i / n;
 	    	x1 = cx - (r * sinf(1 * theta));
@@ -84,11 +88,12 @@ void drawHelixLine(float cx, float cy, float r, float angle=0)
 	    	glVertex3f(x2, y2, z2);
 			
 		glEnd();
+
+        glColor3f(0.0, 0.0, 0.0);
+        drawSphere(x1, y1, z1);
+        drawSphere(x2, y2, z2);
+
     }
-    glColor3f(0.0, 0.0, 0.0);
-    glTranslatef(x1, y1, z1);
-    glutSolidSphere(5, 8, 8);
-    glTranslatef(-x1, -y1, -z1);
 }
 
 /*---------------------------------------------------------------------------------------*/
@@ -135,7 +140,7 @@ void menu()
 
 void dna()
 {
-    float cx = 500, cy = 20, r=100;
+    float cx = 500, cy = 50, r=100;
 
     glLineWidth(5.0);
 
