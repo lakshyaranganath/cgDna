@@ -25,7 +25,7 @@ void *fonts[]=
 
 #define PI 3.1415926
     
-float angle=1;
+float theta=1;
 
 
 /*---------------------------------------------------------------------------------------*/
@@ -68,12 +68,12 @@ void drawSphere(float x, float y, float z)
     glTranslatef(-x, -y, -z);
 }
 
-void drawHelixLine(float cx, float cy, float r, float angle=0)
+void drawHelixLine(float cx, float cy, float r, float angle=180)
 {
 	float x1, x2, y1, y2, z1, z2, theta;
 	int i, n = 565;
 	angle = angle * PI / 180.0;
-    for(i=0; i<n; i+=35)
+    for(i=0; i<n; i+=n/10)
     {
         glColor3f(0.75, 0.75, 0.0);
         
@@ -140,22 +140,56 @@ void menu()
 
 /*--------------------------------------------------------------------------------------*/
 
+void drawAxes()
+{
+    glBegin(GL_LINES);
+        glColor3f(1.0, 0.0, 0.0);
+        glVertex3f(0.0, 0.0, 0.0);
+        glVertex3f(50.0, 0.0, 0.0);
+
+        glColor3f(0.0, 1.0, 0.0);
+        glVertex3f(0.0, 0.0, 0.0);
+        glVertex3f(0.0, 50.0, 0.0);
+
+        glColor3f(0.0, 0.0, 1.0);
+        glVertex3f(0.0, 0.0, 0.0);
+        glVertex3f(0.0, 0.0, 50.0);
+    glEnd();
+    glutPostRedisplay();
+}
+
 void dna()
 {
-    float cx = 500, cy = 50, r=100;    
+    float cx = 90, cy = 140, r=100;    
+    // float cx = 512, cy = 20, r=100;    
 
     glLineWidth(5.0);
 
-    glColor3f(0.0, 0.0, 0.75);
-    drawHelixStrand(cx, cy, r, 0);
-    glColor3f(0.75, 0.0, 0.0);
-    drawHelixStrand(cx, cy, r, 138);
-    glColor3f(0.75, 0.75, 0.0);
-    drawHelixLine(cx, cy, r, 138);
+    glPushMatrix();   
+     
+        glRotatef(45, 0, 0, -1);
+        
+        glPushMatrix();
+ 
+            glTranslatef(cx, cy, 0);
+            glRotatef(theta, 0.0, 1.0, 0.0);
+            
+            glColor3f(0.0, 0.0, 0.75);
+            drawHelixStrand(0, cy, r, 0);
+            glColor3f(0.75, 0.0, 0.0);
+            drawHelixStrand(0, cy, r, 138);
+            glColor3f(0.75, 0.75, 0.0);
+            drawHelixLine(0, cy, r, 138);
+
+            glTranslatef(-cx, -cy, 0); 
+            glutPostRedisplay();  
+
+        glPopMatrix();
     
-    glTranslatef(cx, cy, 0);
-    glRotatef(.75, 0, 1, 0);
-    glTranslatef(-cx, -cy, 0);   
+    glPopMatrix();
+    
+    theta+=0.75;
+    glutPostRedisplay();
 }
 
 /*--------------------------------------------------------------------------------------*/
