@@ -8,8 +8,6 @@
 #include <string.h>
 #include <math.h>
 
-int page=-1; //start at intro page
-
 /*---------------------------------------------------------------------------------------*/
 /*							   DECLARATIONS												 */
 /*---------------------------------------------------------------------------------------*/
@@ -24,7 +22,7 @@ void *fonts[]=
 };
 
 #define PI 3.1415926
-    
+int page=-1; //start at intro page
 float theta=1;
 
 
@@ -160,8 +158,7 @@ void drawAxes()
 
 void dna()
 {
-    float cx = 90, cy = 140, r=100;    
-    // float cx = 512, cy = 20, r=100;    
+    float cx = 90, cy = 140, r=100;
 
     glLineWidth(5.0);
 
