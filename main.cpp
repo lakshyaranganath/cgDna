@@ -24,6 +24,9 @@ void *fonts[]=
 };
 
 #define PI 3.1415926
+    
+float angle=1;
+
 
 /*---------------------------------------------------------------------------------------*/
 /*							   HELPER FUNCTIONS									         */
@@ -92,7 +95,6 @@ void drawHelixLine(float cx, float cy, float r, float angle=0)
         glColor3f(0.25, 0.25, 0.25);
         drawSphere(x1, y1, z1);
         drawSphere(x2, y2, z2);
-
     }
 }
 
@@ -140,7 +142,7 @@ void menu()
 
 void dna()
 {
-    float cx = 500, cy = 50, r=100;
+    float cx = 500, cy = 50, r=100;    
 
     glLineWidth(5.0);
 
@@ -152,11 +154,8 @@ void dna()
     drawHelixLine(cx, cy, r, 138);
     
     glTranslatef(cx, cy, 0);
-    glRotatef(1, 0, 1, 0);
-    glTranslatef(-cx, -cy, 0);
-    
-    glFlush();
-    glutPostRedisplay();
+    glRotatef(.75, 0, 1, 0);
+    glTranslatef(-cx, -cy, 0);   
 }
 
 /*--------------------------------------------------------------------------------------*/
@@ -195,6 +194,7 @@ void display(void)
         case  2: adenineThymine();  break;
         case  3: cytosineGuanine(); break;
     }
+
 
     glFlush();
     glutSwapBuffers();
@@ -281,6 +281,7 @@ int main(int argc, char **argv)
     glutInitWindowPosition(0,0);
     glutCreateWindow("DNA");
     glutDisplayFunc(display);
+    glutIdleFunc(display);
     glEnable(GL_DEPTH_TEST);
   
     glutKeyboardFunc(NormalKey);
