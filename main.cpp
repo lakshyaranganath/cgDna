@@ -73,7 +73,7 @@ void drawHelixLine(float cx, float cy, float r, float angle=180)
 	angle = angle * PI / 180.0;
     for(i=0; i<n; i+=n/10)
     {
-        glColor3f(0.75, 0.75, 0.0);
+        glColor3ub(46, 204, 113);
         
 		glBegin(GL_LINE_STRIP);
 	    	theta = 2.0 * PI * i / n;
@@ -90,7 +90,7 @@ void drawHelixLine(float cx, float cy, float r, float angle=180)
 			
 		glEnd();
 
-        glColor3f(0.25, 0.25, 0.25);
+        glColor3ub(52, 73, 94);
         drawSphere(x1, y1, z1);
         drawSphere(x2, y2, z2);
     }
@@ -102,20 +102,20 @@ void drawHelixLine(float cx, float cy, float r, float angle=180)
                                                                                       
 void intro()
 {
-    glColor3f(0.8, 0.1, 0.2);
-    output(350, 580, "DNA - Deoxyribonucleic Acid", fonts[2]);
+    glColor3ub(52, 73, 94);
+    output(370, 580, "DNA - Deoxyribonucleic Acid", fonts[2]);
 
-    glColor3f(1, 0.5, 0);
+    glColor3ub(231, 76, 60);
     output(420, 450, "Damini Cousik", fonts[3]);
     output(420, 380, "Lakshya Ranganath", fonts[3]);
     output(420, 310, "Peri Nikhil", fonts[3]);
 
-    glColor3f(0.5, 0.6, 0.1);
+    glColor3ub(39, 174, 96);
     output(420, 430, "1DS12CS023", fonts[0]);
     output(420, 360, "1DS12CS045", fonts[0]);
     output(420, 290, "1DS12CS061", fonts[0]);
 
-    glColor3f(0.1, 0.1, 0.1);
+    glColor3ub(52, 73, 94);
     output(370, 125, "Press any key to continue...", fonts[0]);
 }
 
@@ -123,13 +123,13 @@ void intro()
                                                                                       
 void menu()
 {
-    glColor3f(0.8, 0.1, 0.2);
-    output(350, 580, "DNA - Deoxyribonucleic Acid", fonts[2]);
+    glColor3ub(52, 73, 94);
+    output(370, 580, "DNA - Deoxyribonucleic Acid", fonts[2]);
 
-    glColor3f(0.5, 0.6, 0.1);
+    glColor3ub(39, 174, 96);
     output(420, 450, "Menu", fonts[3]);
 
-    glColor3f(1, 0.5, 0);
+    glColor3ub(231, 76, 60);
     output(420, 420, "1. DNA", fonts[0]);
     output(420, 390, "2. Adenine-Thymine", fonts[0]);
     output(420, 360, "3. Cytosine-Guanine", fonts[0]);
@@ -137,24 +137,6 @@ void menu()
 }
 
 /*--------------------------------------------------------------------------------------*/
-
-void drawAxes()
-{
-    glBegin(GL_LINES);
-        glColor3f(1.0, 0.0, 0.0);
-        glVertex3f(0.0, 0.0, 0.0);
-        glVertex3f(50.0, 0.0, 0.0);
-
-        glColor3f(0.0, 1.0, 0.0);
-        glVertex3f(0.0, 0.0, 0.0);
-        glVertex3f(0.0, 50.0, 0.0);
-
-        glColor3f(0.0, 0.0, 1.0);
-        glVertex3f(0.0, 0.0, 0.0);
-        glVertex3f(0.0, 0.0, 50.0);
-    glEnd();
-    glutPostRedisplay();
-}
 
 void dna()
 {
@@ -171,11 +153,10 @@ void dna()
             glTranslatef(cx, cy, 0);
             glRotatef(theta, 0.0, 1.0, 0.0);
             
-            glColor3f(0.0, 0.0, 0.75);
+            glColor3ub(52, 152, 219);
             drawHelixStrand(0, cy, r, 0);
-            glColor3f(0.75, 0.0, 0.0);
+            glColor3ub(231, 76, 60);
             drawHelixStrand(0, cy, r, 138);
-            glColor3f(0.75, 0.75, 0.0);
             drawHelixLine(0, cy, r, 138);
 
             glTranslatef(-cx, -cy, 0); 
