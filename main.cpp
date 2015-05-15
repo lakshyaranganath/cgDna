@@ -114,11 +114,28 @@ void drawCircle(float cx, float cy, GLubyte color[])
 
 void drawBondLine(float x1, float y1, float x2, float y2)
 {
-    glColor3ub(0, 0, 0);
+    glColor3ub(52, 73, 94);
+    glLineWidth(3.0);
     glBegin(GL_LINES);
     glVertex2f(x1, y1);
     glVertex2f(x2, y2);
     glEnd();
+}
+
+void getHexagonPoints(float points[6][2], float x, float y, float side)
+{
+	points[0][0] = x;
+	points[0][1] = y;
+	points[1][0] = 0.866*side + x;
+	points[1][1] = 0.5*side + y;
+	points[2][0] = 0.866*side + x;
+	points[2][1] = 1.5*side + y;
+	points[3][0] = x;
+	points[3][1] = 2.0*side + y;
+	points[4][0] = -0.866*side + x;
+	points[4][1] = 1.5*side + y;
+	points[5][0] = -0.866*side + x;
+	points[5][1] = 0.5*side + y;
 }
 
 /*---------------------------------------------------------------------------------------*/
@@ -199,24 +216,171 @@ void dna()
 
 void adenineThymine()
 {
+	float hex1[6][2], hex2[6][2];
     //radius and color declarations
-    GLubyte red[] = {15, 255, 0, 0};          //oxygen
-    GLubyte green[] = {20, 0, 255, 0};        //carbon
-    GLubyte blue[] = {20, 0, 0, 255};         //nitrogen
-    GLubyte white[] = {10, 255, 255, 255};    //hydrogen
+    GLubyte red[] = {15, 192, 57, 43};          //oxygen
+    GLubyte green[] = {20, 39, 174, 96};        //carbon
+    GLubyte blue[] = {20, 41, 128, 185};         //nitrogen
+    GLubyte yellow[] = {10, 241, 196, 15};    //hydrogen
+    getHexagonPoints(hex1, 125, 325, 75);
+    getHexagonPoints(hex2, 525, 75, 75);
     
-    drawCircle(500, 500, red);
-    drawCircle(500, 400, green);
-    drawCircle(500, 300, blue);
-    drawCircle(500, 200, white);
-    drawBondLine(500,500,750,750);
+    //hexagon 1
+    drawCircle(hex1[0][0], hex1[0][1], green);
+    drawCircle(hex1[1][0], hex1[1][1], blue);
+    drawCircle(hex1[2][0], hex1[2][1], green);
+    drawCircle(hex1[3][0], hex1[3][1], green);
+    drawCircle(hex1[4][0], hex1[4][1], green);
+    drawCircle(hex1[5][0], hex1[5][1], blue);
+    drawBondLine(hex1[0][0],hex1[0][1],hex1[1][0],hex1[1][1]);
+    drawBondLine(hex1[1][0],hex1[1][1],hex1[2][0],hex1[2][1]);
+    drawBondLine(hex1[2][0],hex1[2][1],hex1[3][0],hex1[3][1]);
+    drawBondLine(hex1[3][0],hex1[3][1],hex1[4][0],hex1[4][1]);
+    drawBondLine(hex1[4][0],hex1[4][1],hex1[5][0],hex1[5][1]);
+    drawBondLine(hex1[5][0],hex1[5][1],hex1[0][0],hex1[0][1]);
+
+    drawCircle(hex1[0][0], hex1[0][1]-50, red);
+    drawBondLine(hex1[0][0],hex1[0][1],hex1[0][0],hex1[0][1]-50);
+
+    drawCircle(hex1[1][0]+25, hex1[1][1]-25, yellow);
+    drawBondLine(hex1[1][0],hex1[1][1],hex1[1][0]+25,hex1[1][1]-25);
+
+    drawCircle(hex1[2][0]+40, hex1[2][1]+40, red);
+    drawBondLine(hex1[2][0],hex1[2][1],hex1[2][0]+40,hex1[2][1]+40);
+    
+    drawCircle(hex1[3][0]-20, hex1[3][1]+70, yellow);
+    drawCircle(hex1[3][0], hex1[3][1]+50, green);
+    drawBondLine(hex1[3][0],hex1[3][1],hex1[3][0],hex1[3][1]+50);
+    drawCircle(hex1[2][0]-20, hex1[2][1]+125, yellow);
+    drawBondLine(hex1[3][0],hex1[3][1]+50,hex1[2][0]-20,hex1[2][1]+125);
+
+	drawCircle(hex1[4][0]-25,hex1[4][1]+25, yellow);   
+    drawBondLine(hex1[4][0],hex1[4][1],hex1[4][0]-25,hex1[4][1]+25);
+
+
+    //hexagon 2
+    drawCircle(hex2[0][0], hex2[0][1], blue);
+    drawCircle(hex2[1][0], hex2[1][1], green);
+    drawCircle(hex2[2][0], hex2[2][1], green);
+    drawCircle(hex2[3][0], hex2[3][1], green);
+    drawCircle(hex2[4][0], hex2[4][1], blue);
+    drawCircle(hex2[5][0], hex2[5][1], green);
+    drawBondLine(hex2[0][0],hex2[0][1],hex2[1][0],hex2[1][1]);
+    drawBondLine(hex2[1][0],hex2[1][1],hex2[2][0],hex2[2][1]);
+    drawBondLine(hex2[2][0],hex2[2][1],hex2[3][0],hex2[3][1]);
+    drawBondLine(hex2[3][0],hex2[3][1],hex2[4][0],hex2[4][1]);
+    drawBondLine(hex2[4][0],hex2[4][1],hex2[5][0],hex2[5][1]);
+    drawBondLine(hex2[5][0],hex2[5][1],hex2[0][0],hex2[0][1]);
+
+    drawCircle(hex2[1][0]+50, hex2[0][1]+25, blue);
+    drawBondLine(hex2[1][0],hex2[1][1],hex2[1][0]+50,hex2[0][1]+25);
+    drawCircle(hex2[2][0]+50, hex2[3][1]-25, blue);
+    drawBondLine(hex2[2][0],hex2[2][1],hex2[2][0]+50,hex2[3][1]-25);
+    drawCircle(hex2[2][0]+75,hex2[2][1]-37.5,green);
+    drawBondLine(hex2[1][0]+50,hex2[0][1]+25,hex2[2][0]+75,hex2[2][1]-37.5); 
+    drawBondLine(hex2[2][0]+50,hex2[3][1]-25,hex2[2][0]+75,hex2[2][1]-37.5);
+    drawCircle(hex2[2][0]+125,hex2[2][1]-37.5,yellow);
+    drawBondLine(hex2[2][0]+75,hex2[2][1]-37.5,hex2[2][0]+125,hex2[2][1]-37.5);
+
+    drawCircle(hex2[3][0]-20, hex2[3][1]+70, yellow);
+    drawCircle(hex2[3][0], hex2[3][1]+50, blue);
+    drawBondLine(hex2[3][0],hex2[3][1],hex2[3][0],hex2[3][1]+50);
+    drawCircle(hex2[2][0]-20, hex2[2][1]+125, yellow);
+    drawBondLine(hex2[3][0],hex2[3][1]+50,hex2[2][0]-20,hex2[2][1]+125);
+    
+	drawCircle(hex2[5][0]-25,hex2[5][1]-25, yellow);   
+    drawBondLine(hex2[5][0],hex2[5][1],hex2[5][0]-25,hex2[5][1]-25);
+
+    //H-bonds
+    drawBondLine(hex1[2][0]+40,hex1[2][1]+40,hex2[3][0]-20, hex2[3][1]+70);
+    drawBondLine(hex1[1][0]+25,hex1[1][1]-25,hex2[4][0],hex2[4][1]);
 }
 
 /*--------------------------------------------------------------------------------------*/
 
 void cytosineGuanine()
 {
-    //put cytosineGuanine page code here
+    float hex1[6][2], hex2[6][2];
+    //radius and color declarations
+    GLubyte red[] = {15, 192, 57, 43};          //oxygen
+    GLubyte green[] = {20, 39, 174, 96};        //carbon
+    GLubyte blue[] = {20, 41, 128, 185};         //nitrogen
+    GLubyte yellow[] = {10, 241, 196, 15};    //hydrogen
+    getHexagonPoints(hex1, 125, 325, 75);
+    getHexagonPoints(hex2, 525, 75, 75);
+    
+    //hexagon 1
+    drawCircle(hex1[0][0], hex1[0][1], green);
+    drawCircle(hex1[1][0], hex1[1][1], blue);
+    drawCircle(hex1[2][0], hex1[2][1], green);
+    drawCircle(hex1[3][0], hex1[3][1], green);
+    drawCircle(hex1[4][0], hex1[4][1], green);
+    drawCircle(hex1[5][0], hex1[5][1], blue);
+    drawBondLine(hex1[0][0],hex1[0][1],hex1[1][0],hex1[1][1]);
+    drawBondLine(hex1[1][0],hex1[1][1],hex1[2][0],hex1[2][1]);
+    drawBondLine(hex1[2][0],hex1[2][1],hex1[3][0],hex1[3][1]);
+    drawBondLine(hex1[3][0],hex1[3][1],hex1[4][0],hex1[4][1]);
+    drawBondLine(hex1[4][0],hex1[4][1],hex1[5][0],hex1[5][1]);
+    drawBondLine(hex1[5][0],hex1[5][1],hex1[0][0],hex1[0][1]);
+
+    drawCircle(hex1[0][0], hex1[0][1]-50, red);
+    drawBondLine(hex1[0][0],hex1[0][1],hex1[0][0],hex1[0][1]-50);
+
+    drawCircle(hex1[2][0]+40, hex1[2][1]+40, blue);
+    drawBondLine(hex1[2][0],hex1[2][1],hex1[2][0]+40,hex1[2][1]+40);
+    drawCircle(hex1[2][0]+40,hex1[2][1]+75, yellow);
+    drawBondLine(hex1[2][0]+40,hex1[2][1]+40,hex1[2][0]+40,hex1[2][1]+75);
+    drawCircle(hex1[2][0]+75,hex1[2][1]+20,yellow);
+    drawBondLine(hex1[2][0]+40,hex1[2][1]+40,hex1[2][0]+75,hex1[2][1]+20);
+    
+    drawCircle(hex1[3][0], hex1[3][1]+50, yellow);
+    drawBondLine(hex1[3][0],hex1[3][1],hex1[3][0],hex1[3][1]+50);
+
+	drawCircle(hex1[4][0]-25,hex1[4][1]+25, yellow);   
+    drawBondLine(hex1[4][0],hex1[4][1],hex1[4][0]-25,hex1[4][1]+25);
+
+
+    //hexagon 2
+    drawCircle(hex2[0][0], hex2[0][1], blue);
+    drawCircle(hex2[1][0], hex2[1][1], green);
+    drawCircle(hex2[2][0], hex2[2][1], green);
+    drawCircle(hex2[3][0], hex2[3][1], green);
+    drawCircle(hex2[4][0], hex2[4][1], blue);
+    drawCircle(hex2[5][0], hex2[5][1], green);
+    drawBondLine(hex2[0][0],hex2[0][1],hex2[1][0],hex2[1][1]);
+    drawBondLine(hex2[1][0],hex2[1][1],hex2[2][0],hex2[2][1]);
+    drawBondLine(hex2[2][0],hex2[2][1],hex2[3][0],hex2[3][1]);
+    drawBondLine(hex2[3][0],hex2[3][1],hex2[4][0],hex2[4][1]);
+    drawBondLine(hex2[4][0],hex2[4][1],hex2[5][0],hex2[5][1]);
+    drawBondLine(hex2[5][0],hex2[5][1],hex2[0][0],hex2[0][1]);
+
+    drawCircle(hex2[1][0]+50, hex2[0][1]+25, blue);
+    drawBondLine(hex2[1][0],hex2[1][1],hex2[1][0]+50,hex2[0][1]+25);
+    drawCircle(hex2[2][0]+50, hex2[3][1]-25, blue);
+    drawBondLine(hex2[2][0],hex2[2][1],hex2[2][0]+50,hex2[3][1]-25);
+    drawCircle(hex2[2][0]+75,hex2[2][1]-37.5,green);
+    drawBondLine(hex2[1][0]+50,hex2[0][1]+25,hex2[2][0]+75,hex2[2][1]-37.5); 
+    drawBondLine(hex2[2][0]+50,hex2[3][1]-25,hex2[2][0]+75,hex2[2][1]-37.5);
+    drawCircle(hex2[2][0]+125,hex2[2][1]-37.5,yellow);
+    drawBondLine(hex2[2][0]+75,hex2[2][1]-37.5,hex2[2][0]+125,hex2[2][1]-37.5);
+
+    drawCircle(hex2[3][0], hex2[3][1]+50, red);
+    drawBondLine(hex2[3][0],hex2[3][1],hex2[3][0],hex2[3][1]+50);
+
+    drawCircle(hex2[4][0]-25, hex2[4][1]+25, yellow);
+    drawBondLine(hex2[4][0],hex2[4][1],hex2[4][0]-25,hex2[4][1]+25);
+	
+	drawCircle(hex2[5][0]-50, hex2[0][1], blue);   
+    drawBondLine(hex2[5][0],hex2[5][1],hex2[5][0]-50,hex2[0][1]);
+    drawCircle(hex2[5][0]-50, hex2[0][1]-35, yellow);
+    drawBondLine(hex2[5][0]-50,hex2[0][1],hex2[5][0]-50,hex2[0][1]-35);
+    drawCircle(hex2[5][0]-85, hex2[0][1]+35, yellow);
+    drawBondLine(hex2[5][0]-50,hex2[0][1],hex2[5][0]-85,hex2[0][1]+35);
+    
+    //H-bonds
+    drawBondLine(hex1[0][0], hex1[0][1]-50, hex2[5][0]-85, hex2[0][1]+35);
+    drawBondLine(hex1[1][0], hex1[1][1], hex2[4][0]-25, hex2[4][1]+25);
+    drawBondLine(hex1[2][0]+75, hex1[2][1]+20, hex2[3][0], hex2[3][1]+50);
 }
 
 
@@ -341,6 +505,8 @@ int main(int argc, char **argv)
     glutDisplayFunc(display);
     glutIdleFunc(display);
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   
     glutKeyboardFunc(NormalKey);
     createMouseMenu();
