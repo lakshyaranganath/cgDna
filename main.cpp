@@ -218,9 +218,9 @@ void adenineThymine()
 {
 	float hex1[6][2], hex2[6][2];
     //radius and color declarations
-    GLubyte red[] = {15, 192, 57, 43};          //oxygen
+    GLubyte red[] = {15, 231, 76, 60};          //oxygen
     GLubyte green[] = {20, 39, 174, 96};        //carbon
-    GLubyte blue[] = {20, 41, 128, 185};         //nitrogen
+    GLubyte blue[] = {20, 52, 152, 219};         //nitrogen
     GLubyte yellow[] = {10, 241, 196, 15};    //hydrogen
     getHexagonPoints(hex1, 125, 325, 75);
     getHexagonPoints(hex2, 525, 75, 75);
@@ -302,9 +302,9 @@ void cytosineGuanine()
 {
     float hex1[6][2], hex2[6][2];
     //radius and color declarations
-    GLubyte red[] = {15, 192, 57, 43};          //oxygen
+    GLubyte red[] = {15, 231, 76, 60};          //oxygen
     GLubyte green[] = {20, 39, 174, 96};        //carbon
-    GLubyte blue[] = {20, 41, 128, 185};         //nitrogen
+    GLubyte blue[] = {20, 52, 152, 219};         //nitrogen
     GLubyte yellow[] = {10, 241, 196, 15};    //hydrogen
     getHexagonPoints(hex1, 125, 325, 75);
     getHexagonPoints(hex2, 525, 75, 75);
@@ -505,9 +505,7 @@ int main(int argc, char **argv)
     glutDisplayFunc(display);
     glutIdleFunc(display);
     glEnable(GL_DEPTH_TEST);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-  
+
     glutKeyboardFunc(NormalKey);
     createMouseMenu();
 
