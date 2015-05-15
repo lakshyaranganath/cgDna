@@ -96,6 +96,31 @@ void drawHelixLine(float cx, float cy, float r, float angle=180)
     }
 }
 
+void drawCircle(float cx, float cy, GLubyte color[])
+{
+    float x, y, theta, r=color[0];
+    int i, n=720;
+    glColor3ub(color[1],color[2],color[3]);
+    glBegin(GL_POLYGON);
+    for(i=0; i<n; i++)
+    {
+        theta = 2.0 * PI * i / n;
+        x = r * sinf(theta);
+        y = r * cosf(theta);
+        glVertex2f(cx + x, cy + y);
+    }
+    glEnd();
+}
+
+void drawBondLine(float x1, float y1, float x2, float y2)
+{
+    glColor3ub(0, 0, 0);
+    glBegin(GL_LINES);
+    glVertex2f(x1, y1);
+    glVertex2f(x2, y2);
+    glEnd();
+}
+
 /*---------------------------------------------------------------------------------------*/
 /*                                PAGES                                                  */
 /*---------------------------------------------------------------------------------------*/
@@ -174,7 +199,17 @@ void dna()
 
 void adenineThymine()
 {
-    //put adenineThymine page code here
+    //radius and color declarations
+    GLubyte red[] = {15, 255, 0, 0};          //oxygen
+    GLubyte green[] = {20, 0, 255, 0};        //carbon
+    GLubyte blue[] = {20, 0, 0, 255};         //nitrogen
+    GLubyte white[] = {10, 255, 255, 255};    //hydrogen
+    
+    drawCircle(500, 500, red);
+    drawCircle(500, 400, green);
+    drawCircle(500, 300, blue);
+    drawCircle(500, 200, white);
+    drawBondLine(500,500,750,750);
 }
 
 /*--------------------------------------------------------------------------------------*/
@@ -210,6 +245,16 @@ void display(void)
 
     glFlush();
     glutSwapBuffers();
+}
+
+void reshape (int w,int h)
+{
+    glViewport(0, 0, w, h);
+    glLoadIdentity();
+    gluPerspective(65.0, (GLfloat) w/ (GLfloat) h, 1.0, 20.0);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    glTranslatef(0.0, 0.0, -5.0);
 }
 
 /*---------------------------------------------------------------------------------------*/
@@ -292,6 +337,7 @@ int main(int argc, char **argv)
     glutInitWindowSize(1024,768);
     glutInitWindowPosition(0,0);
     glutCreateWindow("DNA");
+    glutReshapeFunc(reshape);
     glutDisplayFunc(display);
     glutIdleFunc(display);
     glEnable(GL_DEPTH_TEST);
