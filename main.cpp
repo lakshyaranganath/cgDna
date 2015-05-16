@@ -22,7 +22,7 @@ void *fonts[]=
 };
 
 #define PI 3.1415926
-int page=2; //start at intro page
+int page=-1; //start at intro page
 float theta=1;
 
 
@@ -317,10 +317,13 @@ void adenineThymine()
 	drawCircle(hex2[5][0]-25,hex2[5][1]-25, yellow);   
     drawBondLine(hex2[5][0],hex2[5][1],hex2[5][0]-25,hex2[5][1]-25);
 
+
     //H-bonds
     drawBondLine(hex1[2][0]+40,hex1[2][1]+40,hex2[3][0]-20, hex2[3][1]+70);
     drawBondLine(hex1[1][0]+25,hex1[1][1]-25,hex2[4][0],hex2[4][1]);
 
+
+    //Labels
     output(hex1[0][0]-25, hex1[0][1]-85, "Thymine", fonts[0]);
     output(hex2[0][0]-25, hex2[0][1]-40, "Adenine", fonts[0]);
 
@@ -409,11 +412,14 @@ void cytosineGuanine()
     drawCircle(hex2[5][0]-85, hex2[0][1]+35, yellow);
     drawBondLine(hex2[5][0]-50,hex2[0][1],hex2[5][0]-85,hex2[0][1]+35);
     
+
     //H-bonds
     drawBondLine(hex1[0][0], hex1[0][1]-50, hex2[5][0]-85, hex2[0][1]+35);
     drawBondLine(hex1[1][0], hex1[1][1], hex2[4][0]-25, hex2[4][1]+25);
     drawBondLine(hex1[2][0]+75, hex1[2][1]+20, hex2[3][0], hex2[3][1]+50);
 
+
+    //Labels
     output(hex1[0][0]-30, hex1[0][1]-85, "Cytosine", fonts[0]);
     output(hex2[0][0]-25, hex2[0][1]-40, "Guanine", fonts[0]);
 
@@ -448,14 +454,34 @@ void display(void)
     glutSwapBuffers();
 }
 
-void reshape (int w,int h)
+void reshape (int width ,int height)
 {
-    glViewport(0, 0, w, h);
+    #define WIDTH 1024
+    #define HEIGHT 768
+    const float ar_origin = (float) WIDTH / (float) HEIGHT;
+    const float ar_new = (float) width / (float) height;
+
+    float scale_w = (float) width / (float) WIDTH;
+    float scale_h = (float) height / (float) HEIGHT;
+    if (ar_new > ar_origin) {
+        scale_w = scale_h;
+    } else {
+        scale_h = scale_w;
+    }
+
+    // float margin_x = (width - WIDTH * scale_w) / 2;
+    // float margin_y = (height - HEIGHT * scale_h) / 2;
+    float margin_x = 0;
+    float margin_y = 0;
+
+    glViewport(margin_x, margin_y, WIDTH * scale_w, HEIGHT * scale_h);
+    glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(65.0, (GLfloat) w/ (GLfloat) h, 1.0, 20.0);
+    glOrtho(0, WIDTH / ar_origin, 0, HEIGHT / ar_origin, 0, 1.0);
+
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    glTranslatef(0.0, 0.0, -5.0);
+    glutPostRedisplay();
 }
 
 /*---------------------------------------------------------------------------------------*/
@@ -538,9 +564,9 @@ int main(int argc, char **argv)
     glutInitWindowSize(1024,768);
     glutInitWindowPosition(0,0);
     glutCreateWindow("DNA");
-    glutReshapeFunc(reshape);
     glutDisplayFunc(display);
     glutIdleFunc(display);
+    glutReshapeFunc(reshape);
     glEnable(GL_DEPTH_TEST);
 
     glutKeyboardFunc(NormalKey);
