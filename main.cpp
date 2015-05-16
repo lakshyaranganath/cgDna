@@ -22,7 +22,7 @@ void *fonts[]=
 };
 
 #define PI 3.1415926
-int page=-1; //start at intro page
+int page=2; //start at intro page
 float theta=1;
 
 
@@ -138,6 +138,32 @@ void getHexagonPoints(float points[6][2], float x, float y, float side)
 	points[5][1] = 0.5*side + y;
 }
 
+void drawLegend()
+{
+	GLubyte red[] = {15, 231, 76, 60};          //oxygen
+    GLubyte green[] = {20, 39, 174, 96};        //carbon
+    GLubyte blue[] = {20, 52, 152, 219};         //nitrogen
+    GLubyte yellow[] = {10, 241, 196, 15};    //hydrogen
+
+    drawCircle(50, 170, yellow);
+    glColor3ub(52, 73, 94);
+    output(100, 168, "Hydrogen", fonts[0]);
+
+    drawCircle(50, 135, red);
+    glColor3ub(52, 73, 94);
+    output(100, 133, "Oxygen", fonts[0]);
+
+    drawCircle(50, 90, blue);
+    glColor3ub(52, 73, 94);
+    output(100, 88, "Nitrogen", fonts[0]);
+
+    drawCircle(50, 40, green);
+    glColor3ub(52, 73, 94);
+    output(100, 38, "Carbon", fonts[0]);
+
+    drawBondLine(0, 200, 200, 200);
+    drawBondLine(200, 200, 200, 0);
+}
 /*---------------------------------------------------------------------------------------*/
 /*                                PAGES                                                  */
 /*---------------------------------------------------------------------------------------*/
@@ -294,6 +320,12 @@ void adenineThymine()
     //H-bonds
     drawBondLine(hex1[2][0]+40,hex1[2][1]+40,hex2[3][0]-20, hex2[3][1]+70);
     drawBondLine(hex1[1][0]+25,hex1[1][1]-25,hex2[4][0],hex2[4][1]);
+
+    output(hex1[0][0]-25, hex1[0][1]-85, "Thymine", fonts[0]);
+    output(hex2[0][0]-25, hex2[0][1]-40, "Adenine", fonts[0]);
+
+    drawLegend();
+
 }
 
 /*--------------------------------------------------------------------------------------*/
@@ -381,6 +413,11 @@ void cytosineGuanine()
     drawBondLine(hex1[0][0], hex1[0][1]-50, hex2[5][0]-85, hex2[0][1]+35);
     drawBondLine(hex1[1][0], hex1[1][1], hex2[4][0]-25, hex2[4][1]+25);
     drawBondLine(hex1[2][0]+75, hex1[2][1]+20, hex2[3][0], hex2[3][1]+50);
+
+    output(hex1[0][0]-30, hex1[0][1]-85, "Cytosine", fonts[0]);
+    output(hex2[0][0]-25, hex2[0][1]-40, "Guanine", fonts[0]);
+
+    drawLegend();
 }
 
 
