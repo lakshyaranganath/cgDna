@@ -260,7 +260,7 @@ void dna()
     theta+=0.75;
 
     glColor3ub(52, 73, 94);
-    output(25, 540, "DNA is molecule that encodes the genetic instructions", fonts[2]);
+    output(25, 540, "DNA is a molecule that encodes the genetic instructions", fonts[2]);
     output(25, 520, "used in the development and functioning of", fonts[2]);
     output(25, 500, "all known living organisms.", fonts[2]);
     
