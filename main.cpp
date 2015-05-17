@@ -22,7 +22,7 @@ void *fonts[]=
 };
 
 #define PI 3.1415926
-int page=1; //start at intro page
+int page=-1; //start at intro page
 float theta=1;
 
 
@@ -84,7 +84,7 @@ void drawHelixLine(float cx, float cy, float r, float angle=180)
 	    	z2 = r * cosf(1 * theta + angle);
 
 	    switch(k)
-	    {
+	    {	
 	    	case 0: colors[0][0] = 46; colors[0][1] = 204; colors[0][2] = 113;		//turquoise
 	    			colors[1][0] = 249; colors[1][1] = 148; colors[1][2] = 6;		//orange
 	    			break;
@@ -191,17 +191,17 @@ void drawLegend()
 void intro()
 {
     glColor3ub(52, 73, 94);
-    output(370, 580, "DNA - Deoxyribonucleic Acid", fonts[2]);
+    output(350, 580, "DNA - Deoxyribonucleic Acid", fonts[2]);
 
     glColor3ub(231, 76, 60);
     output(420, 450, "Damini Cousik", fonts[3]);
-    output(420, 380, "Lakshya Ranganath", fonts[3]);
-    output(420, 310, "Peri Nikhil", fonts[3]);
+    output(420, 350, "Lakshya Ranganath", fonts[3]);
+    output(420, 250, "Peri Nikhil", fonts[3]);
 
     glColor3ub(39, 174, 96);
     output(420, 430, "1DS12CS023", fonts[0]);
-    output(420, 360, "1DS12CS045", fonts[0]);
-    output(420, 290, "1DS12CS061", fonts[0]);
+    output(420, 330, "1DS12CS045", fonts[0]);
+    output(420, 230, "1DS12CS061", fonts[0]);
 
     glColor3ub(52, 73, 94);
     output(370, 125, "Press any key to continue...", fonts[0]);
@@ -212,23 +212,27 @@ void intro()
 void menu()
 {
     glColor3ub(52, 73, 94);
-    output(370, 580, "DNA - Deoxyribonucleic Acid", fonts[2]);
+    output(350, 580, "DNA - Deoxyribonucleic Acid", fonts[2]);
 
     glColor3ub(39, 174, 96);
-    output(420, 450, "Menu", fonts[3]);
+    output(420, 460, "Menu", fonts[2]);
 
     glColor3ub(231, 76, 60);
-    output(420, 420, "1. DNA", fonts[0]);
-    output(420, 390, "2. Adenine-Thymine", fonts[0]);
-    output(420, 360, "3. Cytosine-Guanine", fonts[0]);
-    output(420, 330, "ESC. Exit", fonts[0]);
+    output(420, 420, "1. DNA", fonts[3]);
+    output(420, 370, "2. Adenine-Thymine", fonts[3]);
+    output(420, 320, "3. Cytosine-Guanine", fonts[3]);
+    output(420, 270, "ESC. Exit", fonts[3]);
+
+    glColor3ub(52, 73, 94);
+    output(370, 125, "Press 'm' to come back to this menu...", fonts[0]);
+
 }
 
 /*--------------------------------------------------------------------------------------*/
 
 void dna()
 {
-    float cx = 90, cy = 140, r=100;
+    float cx = 250, cy = 215, r=100;
 
     glLineWidth(5.0);
 
@@ -254,6 +258,57 @@ void dna()
     glPopMatrix();
     
     theta+=0.75;
+
+    glColor3ub(52, 73, 94);
+    output(25, 540, "DNA is molecule that encodes the genetic instructions", fonts[2]);
+    output(25, 520, "used in the development and functioning of", fonts[2]);
+    output(25, 500, "all known living organisms.", fonts[2]);
+    
+    glBegin(GL_LINES);
+        glColor3ub(231, 76, 60);
+    	glVertex2f(25, 450);
+    	glVertex2f(45, 430);
+    	glColor3ub(52, 152, 219);
+    	glVertex2f(45, 450);
+    	glVertex2f(25, 430);
+    glEnd();
+    glColor3ub(52, 73, 94);
+    output(70, 435, "Helix Strands", fonts[2]);
+
+    drawSphere(35, 400, 0);
+    output(70, 395, "Phosphate Base", fonts[2]);
+
+    glBegin(GL_LINES);
+        glColor3ub(46, 204, 113);
+    	glVertex2f(25, 360);
+    	glVertex2f(50, 360);
+    glEnd();
+    glColor3ub(52, 73, 94);
+    output(70, 355, "Adenine", fonts[2]);
+
+    glBegin(GL_LINES);
+        glColor3ub(249, 148, 6);
+    	glVertex2f(25, 320);
+    	glVertex2f(50, 320);
+    glEnd();
+    glColor3ub(52, 73, 94);
+    output(70, 315, "Thymine", fonts[2]);
+
+    glBegin(GL_LINES);
+        glColor3ub(249, 191, 59);
+    	glVertex2f(25, 280);
+    	glVertex2f(50, 280);
+    glEnd();
+    glColor3ub(52, 73, 94);
+    output(70, 275, "Cytosine", fonts[2]);
+
+    glBegin(GL_LINES);
+        glColor3ub(155, 89, 182);
+    	glVertex2f(25, 240);
+    	glVertex2f(50, 240);
+    glEnd();
+    glColor3ub(52, 73, 94);
+    output(70, 235, "Guanine", fonts[2]);
 }
 
 /*--------------------------------------------------------------------------------------*/
@@ -366,6 +421,11 @@ void adenineThymine()
     // output(hex2[0][0]-25, hex2[0][1]-40, "Adenine", fonts[0]);
 
     drawLegend();
+    glColor3ub(52, 73, 94);
+    output(300, 190, "Adenine is a nucleobase which plays a major role in", fonts[2]);
+    output(300, 170, "cellular respiration and is rich in adenosine.", fonts[2]);
+    output(300, 130, "Thymine is a pyrimidine nucleobase and it", fonts[2]);
+    output(300, 110, "assists in stabalizing the nucleic acid structures.", fonts[2]);
 
 }
 
@@ -433,15 +493,15 @@ void cytosineGuanine()
 	    drawBondLine(hex2[4][0],hex2[4][1],0, hex2[5][0],hex2[5][1],0);
 	    drawBondLine(hex2[5][0],hex2[5][1],0, hex2[0][0],hex2[0][1],0);
 
-	    drawAtom(hex2[1][0]+50, hex2[0][1]+25, 0, blue);
-	    drawBondLine(hex2[1][0],hex2[1][1],0, hex2[1][0]+50,hex2[0][1]+25,0);
-	    drawAtom(hex2[2][0]+50, hex2[3][1]-25, 0, blue);
-	    drawBondLine(hex2[2][0],hex2[2][1],0, hex2[2][0]+50,hex2[3][1]-25,0);
-	    drawAtom(hex2[2][0]+75,hex2[2][1]-37.5,0, green);
-	    drawBondLine(hex2[1][0]+50,hex2[0][1]+25,0, hex2[2][0]+75,hex2[2][1]-37.5,0); 
-	    drawBondLine(hex2[2][0]+50,hex2[3][1]-25,0, hex2[2][0]+75,hex2[2][1]-37.5,0);
-	    drawAtom(hex2[2][0]+125,hex2[2][1]-37.5,0, yellow);
-	    drawBondLine(hex2[2][0]+75,hex2[2][1]-37.5,0, hex2[2][0]+125,hex2[2][1]-37.5,0);
+	    drawAtom(hex2[1][0]+50, hex2[0][1]+25, 50, blue);
+	    drawBondLine(hex2[1][0],hex2[1][1],0, hex2[1][0]+50,hex2[0][1]+25,50);
+	    drawAtom(hex2[2][0]+50, hex2[3][1]-25, 50, blue);
+	    drawBondLine(hex2[2][0],hex2[2][1],0, hex2[2][0]+50,hex2[3][1]-25,50);
+		    drawAtom(hex2[2][0]+100,hex2[2][1]-37.5,75, green);
+		    drawBondLine(hex2[1][0]+50, hex2[0][1]+25, 50, hex2[2][0]+100,hex2[2][1]-37.5,75); 
+		    drawBondLine(hex2[2][0]+50, hex2[3][1]-25, 50, hex2[2][0]+100,hex2[2][1]-37.5,75);
+			    drawAtom(hex2[2][0]+142.5,hex2[2][1]-37.5,75, yellow);
+			    drawBondLine(hex2[2][0]+100,hex2[2][1]-37.5,75, hex2[2][0]+142.5,hex2[2][1]-37.5,75);
 
 	    drawAtom(hex2[3][0], hex2[3][1]+50, 0, red);
 	    drawBondLine(hex2[3][0],hex2[3][1],0, hex2[3][0],hex2[3][1]+50,0);
@@ -449,19 +509,19 @@ void cytosineGuanine()
 	    drawAtom(hex2[4][0]-25, hex2[4][1]+25, 0, yellow);
 	    drawBondLine(hex2[4][0],hex2[4][1],0, hex2[4][0]-25,hex2[4][1]+25,0);
 		
-		drawAtom(hex2[5][0]-50, hex2[0][1], 0, blue);   
-	    drawBondLine(hex2[5][0],hex2[5][1],0, hex2[5][0]-50,hex2[0][1],0);
-	    drawAtom(hex2[5][0]-50, hex2[0][1]-35, 0, yellow);
-	    drawBondLine(hex2[5][0]-50,hex2[0][1],0, hex2[5][0]-50,hex2[0][1]-35,0);
-	    drawAtom(hex2[5][0]-85, hex2[0][1]+35, 0, yellow);
-	    drawBondLine(hex2[5][0]-50,hex2[0][1],0, hex2[5][0]-85,hex2[0][1]+35,0);
+		drawAtom(hex2[5][0]-50, hex2[0][1]+25, 50, blue);   
+	    drawBondLine(hex2[5][0],hex2[5][1],0, hex2[5][0]-50,hex2[0][1]+25,50);
+		    drawAtom(hex2[5][0]-50, hex2[0][1]-15, 50, yellow);
+		    drawBondLine(hex2[5][0]-50,hex2[0][1]+25,50, hex2[5][0]-50,hex2[0][1]-15,50);
+		    drawAtom(hex2[5][0]-85, hex2[0][1]+60, 50, yellow);
+		    drawBondLine(hex2[5][0]-50,hex2[0][1]+25,50, hex2[5][0]-85,hex2[0][1]+60,50);
 	    
 
 	    //H-bonds
 	    glLineWidth(1.5);
 	    glBegin(GL_LINES);
 		    glVertex3f(hex1[0][0],hex1[0][1]-50,0);
-		    glVertex3f(hex2[5][0]-85,hex2[0][1]+35,0);
+		    glVertex3f(hex2[5][0]-85,hex2[0][1]+60,50);
 
 		    glVertex3f(hex1[1][0],hex1[1][1],0);
 		    glVertex3f(hex2[4][0]-25,hex2[4][1]+25,0);
@@ -479,6 +539,11 @@ void cytosineGuanine()
     // output(hex1[0][0]-30, hex1[0][1]-85, "Cytosine", fonts[0]);
     // output(hex2[0][0]-25, hex2[0][1]-40, "Guanine", fonts[0]);
     drawLegend();
+    glColor3ub(52, 73, 94);
+    output(300, 190, "Cytosine recognizes specific DNA sequences and catalyzes", fonts[2]);
+    output(300, 170, "the transfer of a methyl group.", fonts[2]);
+    output(300, 130, "Guanine can carry energy and if bound to special receptors,", fonts[2]);
+    output(300, 110, "can help carry signals from one part of the cell to another.", fonts[2]);
 }
 
 
