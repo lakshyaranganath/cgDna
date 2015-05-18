@@ -181,8 +181,6 @@ void drawLegend()
     	glVertex3f(200, 200, 0);
     	glVertex3f(200, 0, 0);
     glEnd();
-    // drawBondLine(0,200,0, 200,200,0);
-    // drawBondLine(200,200,0, 200,0,0);
 }
 /*---------------------------------------------------------------------------------------*/
 /*                                PAGES                                                  */
@@ -416,10 +414,6 @@ void adenineThymine()
 	glPopMatrix();
 	theta+=0.25;
 
-    //Labels
-    // output(hex1[0][0]-25, hex1[0][1]-85, "Thymine", fonts[0]);
-    // output(hex2[0][0]-25, hex2[0][1]-40, "Adenine", fonts[0]);
-
     drawLegend();
     glColor3ub(52, 73, 94);
     output(300, 190, "Adenine is a nucleobase which plays a major role in", fonts[2]);
@@ -535,9 +529,6 @@ void cytosineGuanine()
 	glPopMatrix();
 	theta+=0.25;
 
-    //Labels
-    // output(hex1[0][0]-30, hex1[0][1]-85, "Cytosine", fonts[0]);
-    // output(hex2[0][0]-25, hex2[0][1]-40, "Guanine", fonts[0]);
     drawLegend();
     glColor3ub(52, 73, 94);
     output(300, 190, "Cytosine recognizes specific DNA sequences and catalyzes", fonts[2]);
@@ -589,8 +580,6 @@ void reshape (int width ,int height)
         scale_h = scale_w;
     }
 
-    // float margin_x = (width - WIDTH * scale_w) / 2;
-    // float margin_y = (height - HEIGHT * scale_h) / 2;
     float margin_x = 0;
     float margin_y = 0;
 
